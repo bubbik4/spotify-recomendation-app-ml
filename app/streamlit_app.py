@@ -31,7 +31,7 @@ search_query = st.text_input("Szukaj utworu:", placeholder="np. Numb")
 
 # search logic
 if search_query:
-    with st.spiner("Przeszukuję bazę i analizuję wektory..."):
+    with st.spinner("Przeszukuję bazę i analizuję wektory..."):
         results = get_recommendation(search_query, df, model, scaler, features)
 
         if results is not None:
