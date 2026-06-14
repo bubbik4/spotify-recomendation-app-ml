@@ -33,3 +33,16 @@ def get_track_details(track_id):
     except Exception as e:
         print(f"Błąd API: {e}")
         return None, None
+
+if __name__ == "__main__":
+    # testing track_id (Linkin Park - Numb)
+    test_id = "2nLtzopw4rPReszdYBJU6h"
+    print("Connecting to Spotify API..")
+
+    cover, preview = get_track_details(test_id)
+
+    if cover:
+        print("SUCCESS. Found cover: {cover}")
+        print("Prev: {preview}")
+    else:
+        print("NOPE")
