@@ -27,7 +27,7 @@ def get_track_details(track_id):
         images = track_info['album'].get('images', [])
         cover_url = images[0]['url'] if images else None
         
-        preview_url = track_info.get('prewiev_url')
+        preview_url = track_info.get('preview_url')
 
         return cover_url, preview_url
     except Exception as e:
