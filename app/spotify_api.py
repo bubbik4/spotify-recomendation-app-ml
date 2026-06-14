@@ -34,6 +34,7 @@ def get_track_details(track_id):
         print(f"Błąd API: {e}")
         return None, None
 
+"""
 if __name__ == "__main__":
     # testing track_id (Linkin Park - Numb)
     test_id = "2nLtzopw4rPReszdYBJU6h"
@@ -46,3 +47,4 @@ if __name__ == "__main__":
         print(f"Prev: {preview}")
     else:
         print("NOPE")
+"""
