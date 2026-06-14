@@ -1,6 +1,6 @@
 import os
 import spotipy
-from spotipy.oatuh2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     cover, preview = get_track_details(test_id)
 
     if cover:
-        print("SUCCESS. Found cover: {cover}")
-        print("Prev: {preview}")
+        print(f"SUCCESS. Found cover: {cover}")
+        print(f"Prev: {preview}")
     else:
         print("NOPE")
