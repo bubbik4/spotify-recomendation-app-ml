@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 from recommender import load_models, get_recommendation
+from spotify_api import get_track_details
 
 # Konfiguracja głównego okna aplikacji
 st.set_page_config(page_title="Music Recommender", page_icon="🎵", layout="wide")
@@ -36,6 +37,16 @@ if search_query:
 
         if results is not None:
             st.success("Znaleziono podobne utwory!")
-            st.dataframe(results)
+            # st.dataframe(results)
+            cols = st.columns(len(results))
+
+            for col, (_, row) in zip(cols, results.iterrows()):
+                with col:
+                    st.image("https://via.placeholder.com/300?text=Okładka", use_container_width=True)
+                    
+                    st.markdown(f"**{row['track_name']}**")
+                    st.markdown(f"*{row['artists']}*")
+                    
+                    st.caption("🎧 lorem ipsum dolor sit amet...")
         else:
             st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
