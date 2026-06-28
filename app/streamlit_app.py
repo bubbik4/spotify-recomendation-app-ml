@@ -52,9 +52,6 @@ if search_query:
                     st.markdown(f"**{row['track_name']}**")
                     st.markdown(f"*{row['artists']}*")
 
-                    if preview_url:
-                        st.audio(preview_url, format="audio/mp3")
-                    else:
-                        st.caption("Brak podglądu ze Spotify")
+                    st.link_button("🎵 Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
         else:
             st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
