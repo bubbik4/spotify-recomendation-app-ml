@@ -22,6 +22,9 @@ def load_data():
 # backend init
 model, scaler = get_ml_components()
 df = load_data()
+
+df['search_display'] = df['track_name'] + " - " + df['artists']
+
 features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
 # main i-face
@@ -52,6 +55,6 @@ if search_query:
                     st.markdown(f"**{row['track_name']}**")
                     st.markdown(f"*{row['artists']}*")
 
-                    st.link_button("🎵 Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
+                    st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
         else:
             st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
