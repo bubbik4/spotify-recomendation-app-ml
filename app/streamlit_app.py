@@ -42,11 +42,19 @@ if search_query:
 
             for col, (_, row) in zip(cols, results.iterrows()):
                 with col:
-                    st.image("https://via.placeholder.com/300?text=Okładka", use_container_width=True)
-                    
+                    cover_url, preview_url = get_track_details(row['track_id'])
+
+                    if cover_url:
+                        st.image(cover_url, use_container_width=True)
+                    else:
+                        st.image("https://via.placeholder.com/300?text=Brak+Okładki", use_container_width=True)
+
                     st.markdown(f"**{row['track_name']}**")
                     st.markdown(f"*{row['artists']}*")
-                    
-                    st.caption("🎧 lorem ipsum dolor sit amet...")
+
+                    if preview_url:
+                        st.audio(preview_url, format="audio/mp3")
+                    else:
+                        st.caption("Brak podglądu ze Spotify")
         else:
             st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
