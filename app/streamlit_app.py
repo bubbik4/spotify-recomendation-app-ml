@@ -22,8 +22,11 @@ def load_data():
 # backend init
 model, scaler = get_ml_components()
 df = load_data()
+df = df.dropna(subset=['track_name', 'artists'])
 
-df['search_display'] = df['track_name'] + " - " + df['artists']
+df['first_artist'] = df['artists'].astype(str).str.split(';').str[0]
+
+df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
 
 features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
@@ -31,7 +34,7 @@ features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrument
 st.title("🎵 System Rekomendacji Muzyki")
 st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit")
 
-track_options = df['search_display'].dropna().unique().tolist()
+track_options = df['search_display'].unique().tolist()
 
 search_query = st.selectbox(
     "Szukaj utworu:",
