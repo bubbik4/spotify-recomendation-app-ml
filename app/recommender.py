@@ -12,11 +12,11 @@ def load_models():
 
     return model, scaler
 
-def get_recommendation(song_name, df, model, scaler, features):
+def get_recommendation(search_query, df, model, scaler, features):
     # Searching by song name
-    matched_songs = df[df['track_name'].str.contains(song_name, case=False, na=False)]
+    matched_songs = df[df['search_display'] == search_query]
 
-    if(matched_songs.empty):
+    if matched_songs.empty:
         return None
     
     
