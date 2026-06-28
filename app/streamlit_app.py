@@ -32,6 +32,7 @@ st.title("🎵 System Rekomendacji Muzyki")
 st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit")
 
 track_options = df['search_display'].dropna().unique().tolist()
+
 search_query = st.selectbox(
     "Szukaj utworu:",
     options=track_options,

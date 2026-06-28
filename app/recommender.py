@@ -14,7 +14,7 @@ def load_models():
 
 def get_recommendation(search_query, df, model, scaler, features):
     # Searching by song name
-    matched_songs = df[df['search_display'] == search_query]
+    matched_songs = df[df['search_display'].str.contains(search_query, case=False, na=False, regex=False)]
 
     if matched_songs.empty:
         return None
