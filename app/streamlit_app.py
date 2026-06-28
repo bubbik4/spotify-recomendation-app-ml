@@ -31,7 +31,14 @@ features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrument
 st.title("🎵 System Rekomendacji Muzyki")
 st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit")
 
-search_query = st.text_input("Szukaj utworu:", placeholder="np. Numb")
+track_options = df['search_display'].dropna().unique().tolist()
+search_query = st.selectbox(
+    "Szukaj utworu:",
+    options=track_options,
+    index=None,
+    placeholder="np, Numb - Linkin Park"
+)
+# search_query = st.text_input("Szukaj utworu:", placeholder="np. Numb")
 
 # search logic
 if search_query:
