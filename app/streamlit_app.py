@@ -22,7 +22,7 @@ def load_data():
     df = df.rename(columns={'name': 'track_name', 'id': "track_id"})
 
     df = df.dropna(subset=['track_name', 'artists'])
-    df['first_artist'] = df['artists'].astype(str).str.split(';').str[0]
+    df['first_artist'] = df['artists'].astype(str).str.replace(r"\[|\]|'|\"", "", regex=True).str.split(',').str[0].str.strip()
     df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
     
     return df
@@ -30,7 +30,7 @@ def load_data():
 # backend init
 model, scaler = get_ml_components()
 df = load_data()
-features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
+features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
 # main i-face
 st.title("🎵 System Rekomendacji Muzyki")

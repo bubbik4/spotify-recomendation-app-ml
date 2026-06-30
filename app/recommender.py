@@ -33,4 +33,4 @@ def get_recommendation(search_query, df, model, scaler, features):
     recommended_df = df.iloc[indices[0]].copy()
     recommended_df['cosine_distance'] = distances[0]
 
-    return recommended_df[['master_id', 'track_id', 'track_name', 'artists', 'cosine_distance']]
+    return recommended_df[['track_id', 'track_name', 'artists', 'cosine_distance']]
