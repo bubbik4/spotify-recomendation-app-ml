@@ -16,9 +16,11 @@ def get_ml_components():
 @st.cache_data
 def load_data():
     current_dir = os.path.dirname(__file__)
-    data_path = os.path.join(current_dir, '..', 'data', 'spotify_cleaned.csv')
+    data_path = os.path.join(current_dir, '..', 'data', 'tracks_features.csv')
     df = pd.read_csv(data_path)
     
+    df = df.rename(columns={'name': 'track_name', 'id': "track_id"})
+
     df = df.dropna(subset=['track_name', 'artists'])
     df['first_artist'] = df['artists'].astype(str).str.split(';').str[0]
     df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
@@ -34,21 +36,6 @@ features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrument
 st.title("🎵 System Rekomendacji Muzyki")
 st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit")
 
-track_options = df['search_display'].unique().tolist()
-
-search_text = st.text_input("Szukaj utworu:", placeholder="np. Numb")
-
-if search_text and len(search_text) >= 3:
-    filtered_df = df[df['search_display'].str.contains(search_text, case=False, na=False)]
-
-    if not filtered_df.empty:
-        track_options = filtered_df['search_display'].unique().tolist()
-        search_query = st.selectbox(
-            "Wybierz wykonanie z listy:",
-            options=track_options,
-            index=None
-        )
-
 # search_query = st.selectbox(
 #     "Szukaj utworu:",
 #     options=track_options,
@@ -58,13 +45,31 @@ if search_text and len(search_text) >= 3:
 # search_query = st.text_input("Szukaj utworu:", placeholder="np. Numb")
 
 # search logic
+col1, col2 = st.columns(2)
+
+with col1:
+    search_text = st.text_input("1. Wpisz tytuł:", placeholder="np. Numb")
+
+if search_text and len(search_text) >= 3:
+    filtered_df = df[df['search_display'].str.contains(search_text, case=False, na=False)]
+
+    if not filtered_df.empty:
+        track_options = filtered_df['search_display'].unique().tolist()
+        
+        with col2:
+            search_query = st.selectbox(
+                "2. Doprecyzuj wykonanie:",
+                options=track_options,
+                index=None
+            )
+
+        # WCIĘCIE: Cała logika odpalania modelu musi być TUTAJ, wewnątrz warunku
         if search_query:
             with st.spinner("Przeszukuję bazę i analizuję wektory..."):
                 results = get_recommendation(search_query, df, model, scaler, features)
 
                 if results is not None:
                     st.success("Znaleziono podobne utwory!")
-                    # st.dataframe(results)
                     cols = st.columns(len(results))
 
                     for col, (_, row) in zip(cols, results.iterrows()):
@@ -78,9 +83,8 @@ if search_text and len(search_text) >= 3:
 
                             st.markdown(f"**{row['track_name']}**")
                             st.markdown(f"*{row['artists']}*")
-
                             st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
                 else:
                     st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
-        else:
-            st.info("Nie znaleziono utworów pasujących do wpisanej frazy")
+    else:
+        st.info("Nie znaleziono utworów pasujących do wpisanej frazy")
