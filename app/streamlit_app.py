@@ -17,17 +17,17 @@ def get_ml_components():
 def load_data():
     current_dir = os.path.dirname(__file__)
     data_path = os.path.join(current_dir, '..', 'data', 'spotify_cleaned.csv')
-    return pd.read_csv(data_path)
+    df = pd.read_csv(data_path)
+    
+    df = df.dropna(subset=['track_name', 'artists'])
+    df['first_artist'] = df['artists'].astype(str).str.split(';').str[0]
+    df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
+    
+    return df
     
 # backend init
 model, scaler = get_ml_components()
 df = load_data()
-df = df.dropna(subset=['track_name', 'artists'])
-
-df['first_artist'] = df['artists'].astype(str).str.split(';').str[0]
-
-df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
-
 features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
 # main i-face
