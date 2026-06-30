@@ -58,29 +58,29 @@ if search_text and len(search_text) >= 3:
 # search_query = st.text_input("Szukaj utworu:", placeholder="np. Numb")
 
 # search logic
-    if search_query:
-        with st.spinner("Przeszukuję bazę i analizuję wektory..."):
-            results = get_recommendation(search_query, df, model, scaler, features)
+        if search_query:
+            with st.spinner("Przeszukuję bazę i analizuję wektory..."):
+                results = get_recommendation(search_query, df, model, scaler, features)
 
-            if results is not None:
-                st.success("Znaleziono podobne utwory!")
-                # st.dataframe(results)
-                cols = st.columns(len(results))
+                if results is not None:
+                    st.success("Znaleziono podobne utwory!")
+                    # st.dataframe(results)
+                    cols = st.columns(len(results))
 
-                for col, (_, row) in zip(cols, results.iterrows()):
-                    with col:
-                        cover_url, preview_url = get_track_details(row['track_id'])
+                    for col, (_, row) in zip(cols, results.iterrows()):
+                        with col:
+                            cover_url, preview_url = get_track_details(row['track_id'])
 
-                        if cover_url:
-                            st.image(cover_url, use_container_width=True)
-                        else:
-                            st.image("https://via.placeholder.com/300?text=Brak+Okładki", use_container_width=True)
+                            if cover_url:
+                                st.image(cover_url, use_container_width=True)
+                            else:
+                                st.image("https://via.placeholder.com/300?text=Brak+Okładki", use_container_width=True)
 
-                        st.markdown(f"**{row['track_name']}**")
-                        st.markdown(f"*{row['artists']}*")
+                            st.markdown(f"**{row['track_name']}**")
+                            st.markdown(f"*{row['artists']}*")
 
-                        st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
-            else:
-                st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
-    else:
-        st.info("Nie znaleziono utworów pasujących do wpisanej frazy")
+                            st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
+                else:
+                    st.error("Nie znaleziono takiego utworu. Spróbuj wpisać inny tytuł")
+        else:
+            st.info("Nie znaleziono utworów pasujących do wpisanej frazy")
