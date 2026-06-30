@@ -7,7 +7,7 @@
 - [x] ~~Implement fallback placeholders (e.g., default image if API returns None for a cover)~~
 - [x] ~~Add a visual spinner/loading state while fetching API data for all 5 recommendations~~
 - [x] ~~Fix search logic to handle long artist names and exact matching (Data Cleaning)~~
-- [ ] **Optimize performance:** Move DataFrame preprocessing (`first_artist` and `search_display` columns) inside `@st.cache_data` to prevent CPU overhead on every click.
+- [x] **Optimize performance:** Move DataFrame preprocessing (`first_artist` and `search_display` columns) inside `@st.cache_data` to prevent CPU overhead on every click.
 - [ ] **Fix UI lag:** Implement 2-stage search (Text Input for >=3 chars -> Selectbox) to reduce browser payload.
 
 ### [MEDIUM PRIORITY / IMPROVEMENTS]
