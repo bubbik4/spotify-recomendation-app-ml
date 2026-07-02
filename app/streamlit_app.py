@@ -32,6 +32,20 @@ model, scaler = get_ml_components()
 df = load_data()
 features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
+# sidebar customization
+st.sidebar.header("Kalibracja modelu")
+st.sidebar.write("Dostosuj wagi, aby wymusić kierunek rekomendacji")
+
+weights = {}
+for feature in features:
+    weights[feature] = st.sidebar.slider(
+        f"{feature}",
+        min_value=0.0,
+        max_value=3.0,
+        value=1.0,
+        step=0.1
+    )
+
 # main i-face
 st.title("🎵 System Rekomendacji Muzyki")
 st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit")
@@ -66,7 +80,7 @@ if search_text and len(search_text) >= 3:
         # WCIĘCIE: Cała logika odpalania modelu musi być TUTAJ, wewnątrz warunku
         if search_query:
             with st.spinner("Przeszukuję bazę i analizuję wektory..."):
-                results = get_recommendation(search_query, df, model, scaler, features)
+                results = get_recommendation(search_query, df, model, scaler, features, weights)
 
                 if results is not None:
                     st.success("Znaleziono podobne utwory!")

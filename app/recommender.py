@@ -14,22 +14,25 @@ def load_models():
 
     return model, scaler
 
-def get_recommendation(search_query, df, model, scaler, features):
-    # Searching by song name
-    # matched_songs = df[df['search_display'].str.contains(search_query, case=False, na=False, regex=False)]
+def get_recommendation(search_query, df, model, scaler, features, weights=None):
     matched_songs = df[df['search_display'] == search_query]
 
     if matched_songs.empty:
         return None
     
-    
     song_data = matched_songs.iloc[0]
     song_features = song_data[features].values.reshape(1, -1)
     song_scaled = scaler.transform(song_features)
 
+    # APLIKACJA WAG Z SUWAKÓW
+    if weights:
+        # Tworzymy wektor wag w takiej samej kolejności co features
+        weight_vector = [weights[f] for f in features]
+        # Wymnażamy wartości wektora startowego
+        song_scaled = song_scaled * weight_vector
+
     distances, indices = model.kneighbors(song_scaled)
 
-    # Results to a table
     recommended_df = df.iloc[indices[0]].copy()
     recommended_df['cosine_distance'] = distances[0]
 
