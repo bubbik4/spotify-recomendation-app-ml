@@ -35,16 +35,17 @@ features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrument
 # sidebar customization
 st.sidebar.header("Kalibracja modelu")
 st.sidebar.write("Dostosuj wagi, aby wymusić kierunek rekomendacji")
-
-weights = {}
-for feature in features:
-    weights[feature] = st.sidebar.slider(
-        f"{feature}",
-        min_value=0.0,
-        max_value=3.0,
-        value=1.0,
-        step=0.1
-    )
+with st.sidebar.form(key="weights_form"):
+    weights = {}
+    for feature in features:
+        weights[feature] = st.slider(
+            f"{feature}",
+            min_value=0.0,
+            max_value=3.0,
+            value=1.0,
+            step=0.1
+        )
+    submit_button = st.form_submit_button(label="Zastosuj")
 
 # main i-face
 st.title("🎵 System Rekomendacji Muzyki")
