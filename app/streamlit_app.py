@@ -30,7 +30,7 @@ def load_data():
 # backend init
 model, scaler = get_ml_components()
 df = load_data()
-features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
+features = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
 # main i-face
 st.title("🎵 System Rekomendacji Muzyki")

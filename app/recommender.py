@@ -9,8 +9,8 @@ def load_models():
     # Importing Colab artifacts
     # model = joblib.load(os.path.join(data_dir, 'model.pkl'))
     # scaler = joblib.load(os.path.join(data_dir, 'scaler.pkl'))
-    model = joblib.load(os.path.join(data_dir, 'spotify_knn_model.pkl'))
-    scaler = joblib.load(os.path.join(data_dir, 'spotify_scaler.pkl'))
+    model = joblib.load(os.path.join(data_dir, 'model.pkl'))
+    scaler = joblib.load(os.path.join(data_dir, 'scaler.pkl'))
 
     return model, scaler
 
