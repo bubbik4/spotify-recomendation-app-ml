@@ -99,22 +99,23 @@ if search_text and len(search_text) >= 3:
                         with col:
                             cover_url, preview_url = get_track_details(row['track_id'])
 
+                            # NAPRAWIONE WCIĘCIA:
                             if cover_url:
                                 st.image(cover_url, use_container_width=True)
                             else:
                                 st.image("https://via.placeholder.com/300?text=Brak+Okładki", use_container_width=True)
 
-                            # --- ZMIANA: Ucinanie długich tekstów ---
-                            truncate = lambda text: str(text) if len(str(text)) <= 35 else str(text)[:32] + "..."
+                            # truncate = lambda text: str(text) if len(str(text)) <= 35 else str(text)[:32] + "..."
+                            # st.markdown(f"**{truncate(row['track_name'])}**")
+                            # st.markdown(f"*{truncate(row['artists'])}*")
                             
-                            # st.markdown(f"**{row['track_name']}**")
-                            # st.markdown(f"*{row['artists']}*")
-                            st.markdown(f"**{truncate(row['track_name'])}**")
-                            st.markdown(f"*{truncate(row['artists'])}*")
-                            # ----------------------------------------
+                            title_html = f'<div style="height: 3.5rem; overflow: hidden; margin-bottom: 0.5rem; line-height: 1.2;"><b>{row["track_name"]}</b></div>'
+                            artist_html = f'<div style="height: 2.5rem; overflow: hidden; line-height: 1.2;"><i>{row["artists"]}</i></div>'
+                            
+                            st.markdown(title_html, unsafe_allow_html=True)
+                            st.markdown(artist_html, unsafe_allow_html=True)
 
-                            st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
-                            
+                            st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")                            
                             with st.expander("Zobacz parametry"):
                                 for f in features:
                                     st.caption(f"**{f.capitalize()}**: {row[f]:.2f}")
