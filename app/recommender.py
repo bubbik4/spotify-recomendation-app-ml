@@ -34,7 +34,7 @@ def get_recommendation(search_query, df, model, scaler, features, custom_feature
     recommended_df['cosine_distance'] = distances[0]
 
     columns_to_return = ['track_id', 'track_name', 'artists', 'cosine_distance'] + features
-    return columns_to_return
+    return recommended_df[columns_to_return]
 
     # if weights:
     #     # Tworzymy wektor wag w takiej samej kolejności co features

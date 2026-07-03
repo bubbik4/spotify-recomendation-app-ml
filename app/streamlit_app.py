@@ -104,15 +104,18 @@ if search_text and len(search_text) >= 3:
                             else:
                                 st.image("https://via.placeholder.com/300?text=Brak+Okładki", use_container_width=True)
 
-                            st.markdown(f"**{row['track_name']}**")
-                            st.markdown(f"*{row['artists']}*")
-                            st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
+                            # --- ZMIANA: Ucinanie długich tekstów ---
+                            truncate = lambda text: str(text) if len(str(text)) <= 35 else str(text)[:32] + "..."
+                            
+                            # st.markdown(f"**{row['track_name']}**")
+                            # st.markdown(f"*{row['artists']}*")
+                            st.markdown(f"**{truncate(row['track_name'])}**")
+                            st.markdown(f"*{truncate(row['artists'])}*")
+                            # ----------------------------------------
 
-                            st.markdown(f"**{row['track_name']}**")
-                            st.markdown(f"*{row['artists']}*")
                             st.link_button("Słuchaj w Spotify", f"https://open.spotify.com/track/{row['track_id']}")
                             
-                            with st.expander("📊 Zobacz parametry"):
+                            with st.expander("Zobacz parametry"):
                                 for f in features:
                                     st.caption(f"**{f.capitalize()}**: {row[f]:.2f}")
                 else:
