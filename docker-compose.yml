@@ -2,7 +2,10 @@ version: '3.8'
 
 services:
   spotify-recommender:
-    build: .
+    build:
+      context: .
+      args:
+        - GITHUB_TOKEN=${MY_SECRET_TOKEN}
     container_name: spotify_recommender
     restart: unless-stopped
     ports:
