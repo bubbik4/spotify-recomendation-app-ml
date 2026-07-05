@@ -12,10 +12,12 @@ COPY . .
 
 ARG GITHUB_TOKEN
 
-RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
+RUN git config --global --add safe.directory '*' && \
+    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
     git lfs pull && \
     git config --global --remove-section url."https://${GITHUB_TOKEN}@github.com/"
 
 EXPOSE 8501
 
+# Komenda startowa
 CMD ["streamlit", "run", "app/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
