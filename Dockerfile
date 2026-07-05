@@ -12,9 +12,10 @@ COPY . .
 
 ARG GITHUB_TOKEN
 
-RUN git config --global --add safe.directory '*' && \
-    git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
-    git lfs pull && \
+RUN git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/" && \
+    git clone --depth 1 https://github.com/bubbik4/spotify-recomendation-app-ml.git /tmp/repo && \
+    cp -r /tmp/repo/data/* /app/data/ && \
+    rm -rf /tmp/repo && \
     git config --global --remove-section url."https://${GITHUB_TOKEN}@github.com/"
 
 EXPOSE 8501
