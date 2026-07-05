@@ -18,13 +18,16 @@ def load_data():
     current_dir = os.path.dirname(__file__)
     data_path = os.path.join(current_dir, '..', 'data', 'spotify_cleaned.csv')
     df = pd.read_csv(data_path)
-    
+
     df = df.rename(columns={'name': 'track_name', 'id': "track_id"})
 
     df = df.dropna(subset=['track_name', 'artists'])
     df['first_artist'] = df['artists'].astype(str).str.replace(r"\[|\]|'|\"", "", regex=True).str.split(',').str[0].str.strip()
     df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
-    
+
+    if 'popularity' in df.columns:
+        df = df.sort_values(by='popularity', ascending=False)
+
     return df
     
 # backend init
