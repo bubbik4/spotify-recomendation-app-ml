@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  spotify-recommender:
+    build: .
+    container_name: spotify_recommender
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
