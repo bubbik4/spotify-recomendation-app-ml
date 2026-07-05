@@ -10,3 +10,6 @@ services:
     restart: unless-stopped
     ports:
       - "8501:8501"
+    environment:
+      - SPOTIPY_CLIENT_ID=${SPOTIPY_CLIENT_ID}
+      - SPOTIPY_CLIENT_SECRET=${SPOTIPY_CLIENT_SECRET}
