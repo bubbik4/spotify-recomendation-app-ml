@@ -25,8 +25,8 @@ def load_data():
     df['first_artist'] = df['artists'].astype(str).str.replace(r"\[|\]|'|\"", "", regex=True).str.split(',').str[0].str.strip()
     df['search_display'] = df['track_name'].astype(str) + " - " + df['first_artist']
 
-    if 'popularity' in df.columns:
-        df = df.sort_values(by='popularity', ascending=False)
+#    if 'popularity' in df.columns:
+#         df = df.sort_values(by='popularity', ascending=False)
 
     return df
     
