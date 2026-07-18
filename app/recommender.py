@@ -35,14 +35,3 @@ def get_recommendation(search_query, df, model, scaler, features, custom_feature
 
     columns_to_return = ['track_id', 'track_name', 'artists', 'cosine_distance'] + features
     return recommended_df[columns_to_return]
-
-    # if weights:
-    #     # Tworzymy wektor wag w takiej samej kolejności co features
-    #     # weight_vector = [weights[f] for f in features]
-    #     # Wymnażamy wartości wektora startowego
-    #     # song_scaled = song_scaled * weight_vector
-
-    # distances, indices = model.kneighbors(song_scaled)
-
-    # recommended_df = df.iloc[indices[0]].copy()
-    # recommended_df['cosine_distance'] = distances[0]

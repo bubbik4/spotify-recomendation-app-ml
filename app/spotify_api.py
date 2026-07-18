@@ -1,4 +1,5 @@
 import os
+import logging
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
@@ -31,20 +32,5 @@ def get_track_details(track_id):
 
         return cover_url, preview_url
     except Exception as e:
-        print(f"Błąd API: {e}")
+        logging.error(f"Błąd Spotify API: {e}")
         return None, None
-
-"""
-if __name__ == "__main__":
-    # testing track_id (Linkin Park - Numb)
-    test_id = "2nLtzopw4rPReszdYBJU6h"
-    print("Connecting to Spotify API..")
-
-    cover, preview = get_track_details(test_id)
-
-    if cover:
-        print(f"SUCCESS. Found cover: {cover}")
-        print(f"Prev: {preview}")
-    else:
-        print("NOPE")
-"""
